@@ -37,7 +37,7 @@ Essa abordagem levanta uma pergunta interessante: Talvez a discussão sobre ESG 
 
 Um estudo em ciência de dados para comparar países a partir de indicadores ESG usando vetores, padronização, distância euclidiana e visualizações analíticas.
 
-![Mapa de similaridade ESG em relação ao Brasil](../images/esg_distance_brazil_worldmap.png)
+![Mapa de similaridade ESG em relação ao Brasil](images/esg_distance_brazil_worldmap.png)
 
 ## Visão geral
 
