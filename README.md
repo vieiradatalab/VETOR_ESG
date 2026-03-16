@@ -1,4 +1,5 @@
 # O que significa “parecido” em dados ESG?
+
 Quando alguém pergunta: **“Quais países são mais parecidos com o Brasil em termos de indicadores ESG?”**  
 A resposta mais comum costuma vir em forma de **médias**, **rankings** ou **índices agregados**.  
 Mas existe uma questão metodológica aqui.
@@ -31,47 +32,126 @@ Sem essa etapa, a comparação pode ficar completamente distorcida.
 
 Essa abordagem levanta uma pergunta interessante: Talvez a discussão sobre ESG não devesse se limitar apenas a **quem está melhor no ranking**. Talvez também devêssemos perguntar: **quais países realmente se parecem entre si em termos de estrutura ESG?**
 
+Para explorar essa ideia na prática, preparei um pequeno experimento com dados do **World Development Indicators do Banco Mundial**.
+
+Para ver o experimento em detalhes acesso o [**notebook**](notebooks/VETOR_ESG.ipynb)
+
+> **Nota**: Este experimento possui finalidade didática e metodológica. Os resultados apresentados **não têm** a pretensão de refletir de forma abrangente ou definitiva o perfil ESG dos países analisados. 
+
+---
+## Pergunta Analítica
+
+O objetivo deste experimento é responder a uma relativamente simples: <span style="color:blue">quais países são mais parecidos com o Brasil em termos de indicadores ESG?</span>
+
+Ou em termos mais analíticos: **Quais países apresentam perfis ESG mais semelhantes ao Brasil quando consideramos simultaneamente indicadores ambientais, sociais e de governança?**
+
+A hipótese exploratória é que a similaridade entre países pode **não seguir necessariamente proximidade geográfica ou nível de renda**.
+
+---
+## Metodologia
+
+Cada país foi representado como um **vetor de indicadores ESG**, permitindo comparar perfis nacionais de forma conjunta em um espaço multivariado.
+
+### Etapas do experimento:
+
+**1. Coleta de dados via API do World Bank**
+
+&nbsp;&nbsp;&nbsp;&nbsp; Os indicadores utilizados foram obtidos diretamente da API do World Bank, garantindo acesso padronizado e reprodutível aos dados internacionais.
+
+**2. Limpeza de entidades não analíticas (regiões e agregados)**
+
+&nbsp;&nbsp;&nbsp;&nbsp; Foram removidas observações que não representam países individualmente, como regiões, blocos econômicos e agregados estatísticos.
+
+**3. Preparação da base analítica**
+
+&nbsp;&nbsp;&nbsp;&nbsp; A base foi organizada para manter apenas os países com informações utilizáveis nos indicadores selecionados para a análise.
 
 
-# Quais países são mais semelhantes ao Brasil em indicadores ESG?
+**4. Padronização dos indicadores (z-score)**
 
-Um estudo em ciência de dados para comparar países a partir de indicadores ESG usando vetores, padronização, distância euclidiana e visualizações analíticas.
+&nbsp;&nbsp;&nbsp;&nbsp; Os indicadores foram padronizados por z-score para eliminar diferenças de escala e permitir comparações consistentes entre variáveis heterogêneas.
 
-![Mapa de similaridade ESG em relação ao Brasil](images/esg_distance_brazil_worldmap.png)
 
-## Visão geral
+**5. Representação vetorial dos países**
 
-Este projeto investiga a similaridade entre países com base no conjunto de indicadores ESG, tomando o Brasil como referência.
-A proposta foi representar cada país como um vetor de características e comparar sua posição com outros países de forma multivariada.
-Em vez de observar um único indicador por vez, o estudo considera o comportamento conjunto das variáveis.
+&nbsp;&nbsp;&nbsp;&nbsp; Após a padronização, cada país passou a ser descrito por um vetor numérico composto pelos seus valores nos indicadores ESG.
 
-## Pergunta central
+**6. Cálculo de distância entre vetores**
 
-Quais países são mais semelhantes ao Brasil quando analisamos o conjunto de indicadores ESG como um vetor?
+&nbsp;&nbsp;&nbsp;&nbsp; A similaridade entre países foi estimada por meio da distância euclidiana entre seus vetores no espaço dos indicadores.
 
-## Método
+**7. Identificação de países mais semelhantes ao Brasil**
 
-- Coleta e organização de indicadores ESG por país
-- Limpeza e padronização dos dados
-- Representação vetorial dos países
-- Cálculo de distâncias para medir similaridade
-- Visualização com mapa, gráficos e PCA
+&nbsp;&nbsp;&nbsp;&nbsp; Com base nas distâncias calculadas, foram identificados os países com perfil ESG mais próximo ao do Brasil.
+
+**8. Visualização da estrutura ESG dos países usando PCA**
+
+&nbsp;&nbsp;&nbsp;&nbsp; A Análise de Componentes Principais (PCA) foi utilizada para projetar os países em duas dimensões e facilitar a visualização de padrões de proximidade e dispersão.
 
 ## Destaque visual
 
+![Similaridade por Indicador](images/top10_matrix.png)
+
+O mapa de calor compara o perfil ESG padronizado do Brasil com o dos dez países mais similares, mostrando que a proximidade ocorre principalmente nos indicadores sociais, enquanto as maiores diferenças aparecem nas dimensões de governança.
+
+## Resultados e Discussões
+
+Este experimento ilustra como técnicas simples de **análise multivariada baseadas em vetores** podem ser utilizadas para investigar a similaridade entre países a partir de indicadores ESG. Ao representar cada país em um espaço composto por variáveis **ambientais, sociais e de governança**, foi possível construir uma **medida sintética de proximidade** capaz de capturar padrões conjuntos que dificilmente seriam observados por análises univariadas ou por comparações baseadas apenas em médias, medianas ou rankings isolados.
+
+### Principais pontos observados
+
+- Países podem apresentar **perfis ESG semelhantes mesmo sem proximidade geográfica**.  
+- A análise baseada em vetores permite considerar **simultaneamente múltiplos indicadores**.  
+- **Métricas de distância** oferecem uma forma sistemática de comparar estruturas ESG entre países.
+
+### Similaridade ESG entre países
+
+Os resultados reforçam que a similaridade entre países não decorre necessariamente de **localização geográfica** ou **pertencimento regional**, mas da **configuração relativa de seus indicadores**.  
+
+![Mapa de similaridade ESG em relação ao Brasil](images/esg_distance_brazil_worldmap.png)
+
 O mapa acima apresenta uma visão sintética da proximidade entre países em relação ao Brasil a partir dos indicadores ESG analisados.
 
-## Principais achados
+Nesse contexto, o uso de métricas de distância permite comparar de forma objetiva o **posicionamento dos países no espaço ESG** e identificar aqueles que apresentam perfil mais próximo ao do Brasil, considerando simultaneamente diferentes dimensões analíticas.
 
-- A comparação multivariada oferece uma leitura mais consistente do que análises isoladas
-- Indicadores individuais ajudam, mas não explicam o posicionamento completo dos países
-- A abordagem vetorial permite identificar padrões de proximidade de forma mais robusta
-- O estudo amplia a qualidade da comparação internacional em ESG
+### Contribuição analítica do experimento
+
+Este experimento demonstra como métodos simples de análise de dados podem complementar abordagens tradicionais baseadas apenas em médias ou rankings.
+
+A principal contribuição desta análise está em propor uma leitura integrada da similaridade ESG entre países, oferecendo uma perspectiva adicional às comparações tradicionais de desempenho.
+
+Se análises baseadas em rankings costumam ser utilizadas para orientar decisões de investimento ao identificar países com melhor ou pior desempenho em determinados indicadores, a análise de similaridade baseada em vetores oferece uma abordagem complementar: ela permite identificar **quais países são estruturalmente comparáveis entre si**.
+
+É importante reconhecer que a análise de similaridade, isoladamente, não gera um sinal direto de investimento. Seu valor aparece quando utilizada como **ferramenta de comparação estrutural** dentro de um processo mais amplo de avaliação de risco e alocação de capital.
+
+Nesse contexto, a análise de similaridade ESG ajuda a responder uma pergunta relevante para investidores e analistas: **quais países apresentam estruturas Ambientais, Sociais e de Governança comparáveis?**
+
+A partir dessa identificação, torna-se possível avaliar diferenças de risco, retorno ou valuation entre economias semelhantes, o que pode revelar oportunidades relativas ou indicar situações em que determinados riscos estejam subestimados.
+
+**Um insight curioso**: o Brasil aparece próximo ao centro da distribuição no espaço dos indicadores ESG analisados , indicando um perfil intermediário entre os países (gráfico abaixo). Esse resultado condiz com a posição do país em rankings internacionais de desempenho ambiental.
+
+![Projeção ESG dos países (PCA) em relação ao Brasil](images/esg_pca.png)
+
+> **Nota**: Posição do Brasil no Environmental Performance Index (EPI) 2020: 55° (https://epi.yale.edu/epi-results/2020/country/bra
+)
+
+### Limitações e considerações metodológicas
+
+Por fim, o estudo mostra que **métodos estatísticos relativamente simples**, quando bem aplicados, podem ampliar a qualidade da análise comparativa em bases internacionais.  
+
+Ao mesmo tempo, é importante reconhecer que os resultados dependem de alguns fatores metodológicos importantes:
+
+- **Escolha dos indicadores**
+- **Forma de padronização das variáveis**
+- **Métrica de distância adotada**
+
+---
+
+> Quando tratamos países como **vetores de dados**, a pergunta *“quem é parecido com quem?”* deixa de ser uma impressão intuitiva e passa a ser **uma questão mensurável no espaço dos indicadores**.
 
 ## Estrutura do repositório
 
 - `notebooks/` → notebook principal do estudo
-- `data/` → dados utilizados
 - `images/` → gráficos exportados
 - `README.md` → apresentação do projeto
 
