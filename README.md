@@ -106,6 +106,10 @@ Este experimento ilustra como técnicas simples de **análise multivariada basea
 
 ### Similaridade ESG entre países
 
+Após padronizar os indicadores ESG e calcular a distância euclidiana, países como Sri Lanka, Albânia, Colômbia e Peru aparecem entre os mais similares ao Brasil, e a análise seguinte busca identificar em quais dimensões dos indicadores essa proximidade se manifesta.
+
+![Países mais similares ao Brasil](images/top10_similar.png)
+
 Os resultados reforçam que a similaridade entre países não decorre necessariamente de **localização geográfica** ou **pertencimento regional**, mas da **configuração relativa de seus indicadores**.  
 
 ![Mapa de similaridade ESG em relação ao Brasil](images/esg_distance_brazil_worldmap.png)
